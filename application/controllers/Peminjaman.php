@@ -12,16 +12,14 @@ class Peminjaman extends CI_Controller {
        
     }
 
-    // Halaman utama peminjaman
     public function index()
     {
-        $data['title'] = "Data Peminjaman"; // tambahkan data agar tidak error
+        $data['title'] = "Data Peminjaman"; 
         $this->load->view('templates/header', $data);
         $this->load->view('v_peminjaman');
         $this->load->view('templates/footer');
     }
 
-    // Ambil data peminjaman untuk ditampilkan di tabel (AJAX)
     public function result_data()
     {
         $cari = $this->input->post('cari');
@@ -36,13 +34,10 @@ class Peminjaman extends CI_Controller {
         ]);
     }
 
-    // Halaman tambah peminjaman
     public function view_tambah()
     {
-        // Ambil hanya buku yang tersedia
         $data['buku'] = $this->db->get_where('buku', ['status' => 'tersedia'])->result();
 
-        // Ambil semua user
         $data['users'] = $this->db->get('users')->result();
 
         $this->load->view('templates/header',$data);
@@ -50,7 +45,6 @@ class Peminjaman extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
-    // Proses tambah peminjaman
     public function tambah()
     {
         $result = $this->M_peminjaman->tambah();
@@ -59,7 +53,6 @@ class Peminjaman extends CI_Controller {
         echo json_encode($result);
     }
 
-    // Halaman edit peminjaman
     public function view_edit($id)
 {
     $data['peminjaman'] = $this->M_peminjaman->row_data($id);
@@ -75,8 +68,6 @@ class Peminjaman extends CI_Controller {
     $this->load->view('templates/footer');
 }
 
-
-    // Proses edit peminjaman
     public function edit()
     {
         $result = $this->M_peminjaman->edit();
@@ -85,7 +76,6 @@ class Peminjaman extends CI_Controller {
         echo json_encode($result);
     }
 
-    // Proses kembalikan buku
     public function kembalikan()
     {
         $result = $this->M_peminjaman->kembalikan();
@@ -94,10 +84,9 @@ class Peminjaman extends CI_Controller {
         echo json_encode($result);
     }
 
-    // Proses hapus peminjaman
     public function hapus()
     {
-        $id_peminjaman = $this->input->post('id_peminjaman'); // ambil dari request POST
+        $id_peminjaman = $this->input->post('id_peminjaman');
         $result = $this->M_peminjaman->hapus($id_peminjaman);
     
         header('Content-Type: application/json');
@@ -105,7 +94,6 @@ class Peminjaman extends CI_Controller {
     }
     
 
-    // Halaman cetak laporan peminjaman
     public function cetak()
     {
         $data['peminjaman'] = $this->M_peminjaman->result_dat('');

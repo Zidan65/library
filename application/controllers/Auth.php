@@ -9,12 +9,10 @@ class Auth extends CI_Controller {
         $this->load->library('session');
     }
 
-    // 🔹 Halaman login
     public function login(){
         $this->load->view('auth/login');
     }
 
-    // 🔹 Proses login
     public function proses_login(){
         $username = $this->input->post('username');
         $password = $this->input->post('password');
